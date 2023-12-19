@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Creating A Movie Libarary with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Learning and implementing React Fundamentals
+
+This application is for learning the fundamentals of react. The OMDb API (Open Movie Database) will be used to populate the application. Core concepts to learn & master:
+- File and Folder Structure
+- State, Props, Hooks
+- Functional Components
 
 ## Available Scripts
 
