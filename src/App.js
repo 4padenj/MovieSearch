@@ -1,54 +1,78 @@
 import { useEffect, useState } from "react";
 import './App.css'
+import SearchIcon from './search.svg'
+import MovieCard from "./MovieCard";
 
 const API_URL = 'http://www.omdbapi.com/?i=tt3896198&apikey=8b54340d'
 
+const movie1 = {
+  "Title": "Wild Man to Ironman",
+  "Year": "2018",
+  "imdbID": "tt9823994",
+  "Type": "movie",
+  "Poster": "N/A"
+}
+
 const App = () => {
 const [movies, setMovies] = useState([]);
+const [searchInput, setSearchInput] = useState("");
 
   const searchMovies = async (title) => {
-    const response = await fetch(`${API_URL}&s=${title}`);
+    if (title != "") {
+      const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
 
     console.log(data.Search)
     setMovies(data.Search)
+    setSearchInput("")
 
     return data
+    }
+    
   }
 
-  // const MovieList = movies.map(movie => {
-  //   return (
-  //     <div className="movie-card">
-  //       <image>IMAGE</image>
-  //       <h3>{movie.Title}</h3>
-  //       <h5>Year</h5>
-  //     </div>
-  //   )
-  // })
+  
 
   
 
   useEffect(() => {
-    // searchMovies('Ironman');
+    searchMovies('');
   }, []);
 
   return (
-    <div>
-      <h1>Hello Paden</h1>
-      <button onClick={() => {searchMovies('Bear')}}>Search!</button>
-      <div>
-        {movies[0] ? 
-          movies[0].Title :
-          "no title"
-        }
-        <pre>{JSON.stringify(movies, null, 2)}</pre>
-        {/* {() => {movies.map(movie => {
-          
+    <div className="app">
+      <h1>MovieSeason</h1>
 
-        })}} */}
+      <div className="search">
+        <input
+          placeholder="Search for movies"
+          value={searchInput}
+          
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <img 
+          src={SearchIcon}
+          alt="search"
+          onClick={() => searchMovies(searchInput)}
+        />
       </div>
+      { movies?.length > 0
+        ? (
+          <div className="container">
+            {movies.map((movie) => (
+              <MovieCard movie={movie} />
+
+            ))}
+          </div>
+          
+        ) : ( 
+          <div className="empty">
+            <h2>Search our movies!</h2>
+          </div>
+      )}
+      
     </div>
-  )
+  );
 };
 
 export default App;
